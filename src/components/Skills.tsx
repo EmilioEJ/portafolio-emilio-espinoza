@@ -35,13 +35,13 @@ export function Skills() {
   const PickIcon = pick.icon;
 
   return (
-    <section className="skills wrap" id="habilidades" data-name="Habilidades">
+    <div className="skills">
       <div className="skills-head">
-        <h2 className="h-mid" data-reveal>Habilidades</h2>
+        <p className="k">{list.length} herramientas · toca una para ver dónde la usé</p>
         <LayoutGroup>
           <div className="tabs" role="tablist" aria-label="Filtrar por área">
             {(["Todas", ...AREAS] as const).map((a) => (
-              <button key={a} type="button" role="tab" aria-selected={area === a} className="tab" onClick={() => setArea(a)}>
+              <button key={a} type="button" role="tab" aria-selected={area === a} className="tab" onClick={() => setArea(a)} data-cursor>
                 {area === a && <motion.span layoutId="tab-bg" className="tab-bg" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
                 <span className="tab-label">{a}</span>
               </button>
@@ -70,6 +70,6 @@ export function Skills() {
           </AnimatePresence>
         </aside>
       </div>
-    </section>
+    </div>
   );
 }

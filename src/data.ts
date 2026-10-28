@@ -1,4 +1,4 @@
-// Contenido del portafolio, tomado del CV general de 2026.
+// Contenido del portafolio: CV general de 2026, trabajo de titulación y repositorios.
 import type { IconType } from "react-icons";
 import {
   SiPython, SiJavascript, SiCplusplus, SiOpenjdk, SiReact, SiVite, SiHtml5, SiCss, SiPhp, SiFastapi,
@@ -7,7 +7,7 @@ import {
 } from "react-icons/si";
 import {
   TbUsers, TbDatabaseSearch, TbPhoneCall, TbDeviceCctv, TbNetwork, TbShieldLock, TbBrain, TbMicrophone,
-  TbTicket, TbServer, TbApi, TbFileCertificate, TbVectorTriangle, TbDatabase, TbReceipt, TbFileTypePdf,
+  TbTicket, TbServer, TbApi, TbFileCertificate, TbVectorTriangle, TbDatabase, TbReceipt, TbPalette,
 } from "react-icons/tb";
 
 export const EMAIL = "emil.200409@gmail.com";
@@ -33,7 +33,7 @@ export const SKILLS: Skill[] = [
   { name: "FastAPI", area: "Web", icon: SiFastapi, color: "#05998b", where: "API y servidor del asistente virtual, con Uvicorn." },
   { name: "WebSockets", area: "Web", icon: SiSocketdotio, color: "#ffffff", where: "Voz y texto en tiempo real en la tesis." },
   { name: "APIs REST", area: "Web", icon: TbApi, color: "#c9a45a", where: "Integración con la API de GLPI en Kruger Corp." },
-  { name: "Three.js", area: "Web", icon: SiThreedotjs, color: "#ffffff", where: "Avatar 3D con WebGL y formato VRM." },
+  { name: "Three.js", area: "Web", icon: SiThreedotjs, color: "#ffffff", where: "El avatar ARIA de la tesis y el templo de este portafolio." },
   { name: "Node.js", area: "Web", icon: SiNodedotjs, color: "#5fa04e", where: "En formación: backend de Drift Cero." },
   { name: "Express", area: "Web", icon: SiExpress, color: "#ffffff", where: "En formación: API REST de Drift Cero." },
 
@@ -66,27 +66,61 @@ export const SKILLS: Skill[] = [
   { name: "GitHub", area: "Herramientas", icon: SiGithub, color: "#ffffff", where: "Repositorios en github.com/EmilioEJ." },
   { name: "Scrum", area: "Herramientas", icon: SiScrumalliance, color: "#009fda", where: "Scrum Fundamentals Certified." },
   { name: "Figma", area: "Herramientas", icon: SiFigma, color: "#f24e1e", where: "Diseño de interfaces." },
+  { name: "Canva", area: "Herramientas", icon: TbPalette, color: "#00c4cc", where: "Material gráfico y presentaciones." },
   { name: "LaTeX", area: "Herramientas", icon: SiLatex, color: "#ffffff", where: "Documento de la tesis en Overleaf." },
   { name: "Geyce y Bilky", area: "Herramientas", icon: TbReceipt, color: "#c9a45a", where: "Nóminas, altas, bajas y facturación en Asesores Espinoza & Jiménez." },
   { name: "Contrat@ (SEPE)", area: "Herramientas", icon: TbFileCertificate, color: "#c9a45a", where: "Comunicación de contratos en España." },
 ];
 
-export const CERTS: { group: string; rows: [string, string][] }[] = [
-  { group: "Universidad Indoamérica", rows: [
-    ["Fundador del Club CPRIQ", "2026"],
-    ["Ayudante de investigación, 20 h", "2026"],
-    ["Webots para simulación robótica, 40 h", "2023"],
-  ] },
-  { group: "Práctica profesional", rows: [["Kruger Corp, 248 h", "2026"]] },
-  { group: "Gestión", rows: [
-    ["Scrum Fundamentals Certified", "2024"],
-    ["Introducción a PMP (PMI), UCAM", "2024"],
-  ] },
-  { group: "Desarrollo", rows: [
-    ["Lógica de programación, 60 h", "2024"],
-    ["Desarrollador de aplicaciones en la nube", "—"],
-    ["TI para servidor público", "—"],
-  ] },
+
+export type Entry = { org: string; role: string; where: string; when: string; tag: string; points: string[] };
+
+export const EXPERIENCE: Entry[] = [
+  { org: "Kruger Corp", role: "Pasante de soporte, infraestructura y automatización", where: "Quito, Ecuador", when: "Oct. 2025 – Ene. 2026 · 248 h", tag: "GLPI",
+    points: [
+      "Flujos automatizados de ingreso y egreso de personal con la API de GLPI conectada a MySQL.",
+      "Cuentas y permisos de usuarios corporativos en Active Directory.",
+      "Telefonía IP, videovigilancia IP y reestructuración y etiquetado de los racks.",
+    ] },
+  { org: "Asesores Espinoza & Jiménez", role: "Gestión administrativa y soporte TI", where: "España", when: "2021 · Ago. 2024 – hoy", tag: "IA",
+    points: [
+      "Skills y agentes de Claude para el alta de trabajadores en Geyce y los contratos en Contrat@.",
+      "Altas y bajas en Geyce, facturación y digitalización de documentos en Bilky.",
+      "Copias de seguridad durante las migraciones de sistemas.",
+    ] },
+  { org: "LR-Light", role: "Ayudante eléctrico", where: "Quito, Ecuador", when: "Jul. – Ago. 2022", tag: "OBRA",
+    points: ["Apoyo en instalaciones eléctricas residenciales y corporativas."] },
 ];
 
-export const PDF_ICON = TbFileTypePdf;
+export const EDUCATION: Entry[] = [
+  { org: "Universidad Tecnológica Indoamérica", role: "Ingeniería en Tecnologías de la Información", where: "Quito, Ecuador", when: "2026", tag: "TESIS",
+    points: ["Trabajo de titulación: prototipo de asistente virtual inteligente con avatar 3D y visión artificial para la difusión de información académica."] },
+  { org: "Unidad Educativa Jan Komensky", role: "Bachillerato en Ciencias", where: "Quito, Ecuador", when: "2022", tag: "BGU", points: [] },
+];
+
+export const LANGUAGES: [string, string][] = [["Español", "Nativo"], ["Inglés", "Intermedio, certificación B1"]];
+
+export type Cert = { year: string; name: string; by: string };
+export const CERTS: Cert[] = [
+  { year: "2026", name: "Fundador del Club de Programación y Robótica (CPRIQ)", by: "Facultad de Ingenierías, U. Indoamérica" },
+  { year: "2026", name: "Ayudante de investigación, 20 h", by: "Proyecto de neuromarketing y diseño web inclusivo, U. Indoamérica" },
+  { year: "2026", name: "Prácticas preprofesionales, 248 h", by: "Kruger Corp" },
+  { year: "2024", name: "Scrum Fundamentals Certified (SFC™)", by: "SCRUMstudy" },
+  { year: "2024", name: "Lógica de programación, 60 h", by: "Fundación Carlos Slim" },
+  { year: "2024", name: "Introducción a la certificación PMP (PMI)", by: "UCAM · Cursa" },
+  { year: "2023", name: "Webots para simulación robótica, 40 h", by: "Universidad Indoamérica" },
+  { year: "—", name: "Tecnologías de la Información para servidor público", by: "Curso complementario" },
+  { year: "—", name: "Desarrollador de aplicaciones en la nube", by: "Curso complementario" },
+];
+
+export type Link = { label: string; href?: string };
+export const REPO = {
+  aria: "https://github.com/EmilioEJ/Virtual_Asistant",
+  tesis: "https://github.com/EmilioEJ/TFG_EmilioESPINOZA",
+  defensa: "https://emilioej.github.io/Presentacion-Tesis/",
+  gaze: "https://github.com/EmilioEJ/Eyetracking",
+  portfolio: "https://github.com/EmilioEJ/portafolio-emilio-espinoza",
+};
+
+// Latencias medias de la evaluación del 7 de octubre de 2026 (evaluacion/resultados/latencia_resumen.json), en ms
+export const ARIA_LATENCY = { stt: 374.5, rag: 38.3, llm: 809.9, ttfb: 384.1, tts: 642.1, perceived: 1869.1 };

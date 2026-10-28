@@ -1,7 +1,7 @@
 {
   "name": "portafolio-emilio-espinoza",
   "private": true,
-  "version": "2.0.0",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,12 +10,8 @@
     "verify:kage": "node scripts/verify-kage.mjs"
   },
   "dependencies": {
-    "@designcodeio/threeui": "^1.2.0",
-    "@gsap/react": "^2.1.2",
     "@pixiv/three-vrm": "^3.5.5",
     "clsx": "^2.1.1",
-    "cn": "^0.5.0",
-    "gsap": "^3.15.0",
     "motion": "^14.7.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -24,13 +20,11 @@
     "three": "^0.186.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"
   }

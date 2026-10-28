@@ -1,13 +1,10 @@
-// Comprueba que el código y los recursos de Kage (ThreeUI) siguen idénticos a la fuente registrada.
-// portafolio.html no está aquí: es el documento derivado con el contenido del portafolio.
+// Comprueba que el documento original y los recursos de Kage (ThreeUI) siguen idénticos a la fuente registrada.
+// src/kage/kage.css y public/kage/world.js no están aquí: son la adaptación al portafolio.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 const ASSETS = "public/landing-pages/secret-pathways-assets";
 const EXPECTED = {
-  "src/shaders/landing-pages/pageTypography.ts": "809cc65797d531cd3b3ca5a56815d55d24b3ee8d293e4e4bad6fdfe6c83244cc",
-  "src/shaders/landing-pages/pageRecipes.ts": "c9d9849cc255bac2d1d938d088c50917f84916f1c516d2bbb27fcfd803523233",
-  "src/shaders/landing-pages/LandingPageFrame.tsx": "61de2cc50888aac4ac5557420b07fa47ed3543bb57c1e0055fafdefa53dbaa78",
   "public/landing-pages/kage.html": "c8e06b90397ac246baf0ab6f32f5f6b570acc6fe03c7009f711b579fb72d9f49",
   [`${ASSETS}/fonts.css`]: "985f85a904a4096f92c06552b06f42a45973ac004af4780d68f18af65ddcc1b0",
   [`${ASSETS}/three.min.js`]: "8a5f7249903b54d30f79f708699d2fed2d6a1d0741a4cd41377d1f01bb5a2271",

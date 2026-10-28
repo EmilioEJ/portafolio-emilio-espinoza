@@ -1,10 +1,13 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./index.css";
+
+// Solo el anfitrión del iframe va en el bundle; el documento Kage se sirve aparte desde /landing-pages
+const Portfolio = lazy(() => import("./Portfolio"));
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <Suspense fallback={null}>
+      <Portfolio />
+    </Suspense>
   </StrictMode>,
 );

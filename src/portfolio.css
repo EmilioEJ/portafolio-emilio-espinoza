@@ -1,0 +1,4 @@
+/* El documento Kage hace su propio scroll dentro del iframe: la página anfitriona no se mueve */
+html, body, #root { height: 100%; margin: 0; overflow: hidden; background: #05070a; }
+.shader-frame { position: fixed; inset: 0; }
+.landing-page-frame { width: 100%; height: 100%; }

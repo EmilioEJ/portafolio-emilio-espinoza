@@ -18,4 +18,6 @@ const templeThree = (): Plugin => ({
 export default defineConfig({
   plugins: [templeThree(), react(), tailwindcss()],
   resolve: { alias: { "@": path.resolve(__dirname, "./src") } },
+  // Inicio: el portafolio Kage. /demos.html: las demos interactivas de la versión anterior.
+  build: { rolldownOptions: { input: { main: path.resolve(__dirname, "index.html"), demos: path.resolve(__dirname, "demos.html") } } },
 });

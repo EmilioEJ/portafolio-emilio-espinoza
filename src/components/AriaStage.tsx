@@ -1,5 +1,5 @@
 // ARIA, el avatar de la tesis, como demostración: mismo modelo VRM y mismo animador de reposo que la
-// app real (resortes, respiración, parpadeo y sacadas). La cabeza sigue un poco al cursor.
+// app real (resortes, respiración, parpadeo y sacadas). Plano hasta la cintura; la cabeza sigue al cursor con suavidad.
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -13,7 +13,9 @@ const POSE: Record<string, [number, number, number]> = {
 };
 const RIGIDEZ: Record<string, number> = { UpperArm: 26, LowerArm: 20, Hand: 16 };
 
-export function AriaStage() {
+const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+
+export function AriaStage({ labels }: { labels: { tag: string; loading: string; error: string } }) {
   const host = useRef<HTMLDivElement>(null);
   const [load, setLoad] = useState<{ state: "idle" | "loading" | "ready" | "error"; pct: number }>({ state: "idle", pct: 0 });
 
@@ -28,8 +30,9 @@ export function AriaStage() {
     near.observe(el); seen.observe(el);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.15, 10);
-    camera.position.set(0, 1.3, 1.5);
+    // Plano medio, de la cintura a la cabeza (~0,92 a 1,65 m del modelo)
+    const camera = new THREE.PerspectiveCamera(36, 1, 0.15, 10);
+    camera.position.set(0, 1.33, 1.26);
     const clock = new THREE.Timer();
     const springs = new Map<string, { pos: number; vel: number }>();
     const spring = (k: string, to: number, stiff: number, dt: number) => {
@@ -39,7 +42,7 @@ export function AriaStage() {
       for (let i = 0; i < steps; i++) { r.vel += (stiff * (to - r.pos) - damp * r.vel) * h; r.pos += r.vel * h; }
       return r.pos;
     };
-    const gaze = { x: 0, y: 0, tx: 0, ty: 0, next: 0 }, pointer = { x: 0, y: 0 };
+    const gaze = { x: 0, y: 0, tx: 0, ty: 0, next: 0 }, pointer = { x: 0, y: 0 }, look = { x: 0, y: 0 };
     let nextBlink = 1.5;
 
     function fit() {
@@ -47,8 +50,8 @@ export function AriaStage() {
       if (!renderer || !w || !h) return;
       renderer.setSize(w, h);
       camera.aspect = w / h;
-      // En un marco estrecho la cámara se abre para que ARIA no quede cortada
-      camera.fov = w / h < 0.9 ? 44 : 35;
+      // En un marco estrecho se abre un poco para que los hombros no queden cortados
+      camera.fov = w / h < 0.6 ? 42 : 36;
       camera.updateProjectionMatrix();
     }
 
@@ -66,7 +69,8 @@ export function AriaStage() {
       fit();
       const ro = new ResizeObserver(fit);
       ro.observe(el);
-      const onMove = (ev: PointerEvent) => { const r = el.getBoundingClientRect(); pointer.x = ((ev.clientX - r.left) / r.width) * 2 - 1; pointer.y = ((ev.clientY - r.top) / r.height) * 2 - 1; };
+      // Posición del cursor respecto al recuadro, limitada: lejos del avatar no gira más que en su borde
+      const onMove = (ev: PointerEvent) => { const r = el.getBoundingClientRect(); pointer.x = clamp(((ev.clientX - r.left) / r.width) * 2 - 1); pointer.y = clamp(((ev.clientY - r.top) / r.height) * 2 - 1); };
       addEventListener("pointermove", onMove, { passive: true });
       cleanup = () => { ro.disconnect(); removeEventListener("pointermove", onMove); };
 
@@ -105,8 +109,10 @@ export function AriaStage() {
         bone("leftEye")?.rotation.set(gaze.x, gaze.y, 0);
         bone("rightEye")?.rotation.set(gaze.x, gaze.y, 0);
 
-        // Cuerpo: respiración, cambio de peso y la cabeza que sigue un poco al cursor
+        // Cuerpo: respiración, cambio de peso y la cabeza que sigue al cursor sin exagerar
         const breath = Math.sin(t * 1.35);
+        look.x += (pointer.x - look.x) * Math.min(1, dt * 3);
+        look.y += (pointer.y - look.y) * Math.min(1, dt * 3);
         const hips = bone("hips"), spine = bone("spine"), chest = bone("chest"), neck = bone("neck"), head = bone("head");
         if (hips) { hips.rotation.y = spring("hips.y", ruido(t * 0.6, 1) * 0.035, 8, dt); hips.rotation.z = spring("hips.z", ruido(t * 0.35, 2) * 0.025, 8, dt); }
         if (spine) {
@@ -116,8 +122,8 @@ export function AriaStage() {
         }
         if (chest) chest.rotation.x = Math.sin(t * 1.35 + 0.5) * 0.01;
         if (head) {
-          head.rotation.x = spring("head.x", gaze.x * 0.4 + ruido(t * 0.7, 4) * 0.015 + pointer.y * 0.08, 30, dt);
-          head.rotation.y = spring("head.y", gaze.y * 0.5 + ruido(t * 0.5, 5) * 0.025 + pointer.x * 0.22, 24, dt);
+          head.rotation.x = spring("head.x", gaze.x * 0.4 + ruido(t * 0.7, 4) * 0.015 + look.y * 0.04, 30, dt);
+          head.rotation.y = spring("head.y", gaze.y * 0.5 + ruido(t * 0.5, 5) * 0.025 + look.x * 0.12, 24, dt);
           head.rotation.z = spring("head.z", ruido(t * 0.4, 6) * 0.025, 18, dt);
           if (neck) neck.rotation.y = head.rotation.y * 0.35;
         }
@@ -145,7 +151,7 @@ export function AriaStage() {
         }
         vrm.update(dt);
       }
-      camera.lookAt(0, 1.2, 0);
+      camera.lookAt(0, 1.3, 0);
       renderer.render(scene, camera);
     }
 
@@ -165,11 +171,11 @@ export function AriaStage() {
       <div ref={host} className="aria-canvas" aria-hidden="true" />
       {load.state !== "ready" && (
         <div className="aria-wait">
-          <span>{load.state === "error" ? "No se pudo cargar el avatar" : load.state === "idle" ? "ARIA" : "Cargando avatar VRM"}</span>
+          <span>{load.state === "error" ? labels.error : load.state === "idle" ? "ARIA" : labels.loading}</span>
           {load.state === "loading" && <b>{load.pct}%</b>}
         </div>
       )}
-      <p className="aria-tag">Avatar VRM de ARIA · demostración</p>
+      <p className="aria-tag">{labels.tag}</p>
     </div>
   );
 }

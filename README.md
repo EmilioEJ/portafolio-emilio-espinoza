@@ -6,7 +6,7 @@ Portafolio interactivo de Paulo Emilio Espinoza Jiménez, ingeniero en Tecnolog�
 
 ## Qué tiene
 
-Una sola página montada sobre el mundo 3D de *Kage* ([ThreeUI](https://threeui.com), MIT): un templo en Three.js que la cámara recorre capítulo a capítulo con el scroll, con la palabra EMILIO en 3D.
+Una sola página montada sobre el mundo 3D de *Kage* ([ThreeUI](https://threeui.com), MIT): un templo en Three.js que la cámara recorre capítulo a capítulo con el scroll, con la palabra EMILIO en 3D. En español o en inglés, con el botón ES / EN de la barra superior.
 
 1. **Sobre mí**: perfil, cifras, experiencia y formación del CV.
 2. **Proyectos**, con enlace a su repositorio cuando es público:
@@ -20,7 +20,8 @@ Una sola página montada sobre el mundo 3D de *Kage* ([ThreeUI](https://threeui.
 | Ruta | Qué es |
 | --- | --- |
 | `src/App.tsx` | La página: capítulos con `data-cam` y textos. |
-| `src/data.ts` | Todo el contenido: CV, proyectos, certificaciones y latencias de ARIA. |
+| `src/content.ts` | Todo el texto del portafolio en español y en inglés. |
+| `src/data.ts` | Habilidades, enlaces y latencias de ARIA. |
 | `src/components/` | El avatar de ARIA, el pipeline de voz y las habilidades. |
 | `src/kage/kage.css`, `public/kage/world.js` | Estilos y mundo 3D de Kage, adaptados (palabra EMILIO, nombres del riel, remedición de capítulos). |
 | `public/landing-pages/` | El documento original de Kage y sus recursos, sin tocar. |

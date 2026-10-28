@@ -22,4 +22,4 @@ npm install
 npm run dev
 ```
 
-`npm run build` genera la versión de producción en `dist/`. Se despliega en Vercel.
+`npm run build` genera la versión de producción en `dist/`. Cada push a `main` se despliega solo en Vercel.
